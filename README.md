@@ -1,7 +1,5 @@
 # DWX Connect - Seamlessly Link Any Trading Strategy to Darwinex
 
-## Need help? Join the [Darwinex Collective Slack](https://join.slack.com/t/darwinex-collective/shared_invite/enQtNjg4MjA0ODUzODkyLWFiZWZlMDZjNGVmOGE2ZDBiZGI4ZWUxNjM5YTU0MjZkMTQ2NGZjNGIyN2QxZDY4NjUyZmVlNmU3N2E2NGE1Mjk) for code updates, Q&A and more.
-
 ## About Darwinex
 
 [Darwinex](https://www.darwinex.com/?utm_source=github&utm_medium=dwx-connect-readme&utm_content=about-us-above-the-fold) is a **UK FCA-Regulated FinTech, Broker & Asset Manager**. We provide cost-effective access to Stocks, Futures, FX and CFDs via Trader Workstation (TWS), TWS API, FIX API, MetaTrader 4 and 5, and empower talented traders with the fastest route to attract investor capital and charge performance fees.
@@ -18,37 +16,37 @@
 * [Configuration](#configuration)
 * [Example Usage](#example-usage)
 * [Video Tutorials](#video-tutorials)
-* [Available functions](#available-functions)
+* [Available Functions](#available-functions)
 * [License](#license) 
 
 ## Introduction
 
-DWX Connect enables anyone to write trading strategies in any programming language and trade them at Darwinex. It provides functionality to subscribe to tick and bar data, as well as to rade via MetaTrader 4 or 5 without having to code algorithms in MQL. **However, this library cannot be used for backtesting.**
+DWX Connect enables anyone to write trading strategies in any programming language and trade them at Darwinex. It provides functionality to subscribe to tick and bar data, as well as to trade via MetaTrader 4 or 5 without having to code algorithms in MQL. **However, this library cannot be used for backtesting.**
 
 Its simple, file-based communication mechanism also provides an easy starting point for implementations in other programming languages. 
 
 For simplicity, we will refer to the non-MQL side of this project as the "Python side" in this README.
 
-## One-off Installation Steps
+## Installation
 
 1. Please download the code from this GitHub repository. 
 
-1. Download the MT4/MT5 Server EA (dwx_server_mt4.mq4 or dwx_server_mt5.mq5, depending on whether you're using MT4 or MT5) and copy it into the /MQL4/Experts or /MQL5/Experts directory (File -> Open Data Folder). 
+2. Download the MT4/MT5 Server EA (dwx_server_mt4.mq4 or dwx_server_mt5.mq5, depending on whether you're using MT4 or MT5) and copy it into the /MQL4/Experts or /MQL5/Experts directory (File -> Open Data Folder). 
 
-1. Double click on the MT4/MT5 EA file to open it in MetaEditor. Press F7 to compile the file. Restart MT4/MT5 or Right-Click -> Refresh in the Navigator window. 
+3. Double click on the MT4/MT5 EA file to open it in MetaEditor. Press F7 to compile the file. Restart MT4/MT5 or Right-Click -> Refresh in the Navigator window. 
 
-1. Attach the EA to any chart. Change the input parameters if needed, for example, MaximumOrders and MaximumLotSize if you want to trade larger sizes.
+4. Attach the EA to any chart. Change the input parameters if needed, for example, MaximumOrders and MaximumLotSize if you want to trade larger sizes.
 
-1. Copy the [python folder](python/) to your working directory.
+5. Copy the [python folder](python/) to your working directory.
 
-1. Open the file [dwx_client_example.py](python/dwx_client_example.py) and change the `MT4_files_dir` variable to the full path of the /MQL4/Files or /MQL5/Files directory. On Windows the path usually looks similar to this (`<username>` is your username):<br/>
+6. Open the file [dwx_client_example.py](python/dwx_client_example.py) and change the `MT4_files_dir` variable to the full path of the /MQL4/Files or /MQL5/Files directory. On Windows the path usually looks similar to this (`<username>` is your username):<br/>
   `C:/Users/<username>/AppData/Roaming/MetaQuotes/Terminal/3B534B10135CFEDF8CD1AAB8BD994B13/MQL4/Files`<br/><br/>
   However, on macOS it could look like this:<br/>
   `/Users/<username>/Library/Application Support/MetaTrader 4/Bottles/metatrader4/drive_c/Program Files/MetaTrader 4/MQL4/Files`<br/><br/>
   And on Linux like this:<br/>
   `/home/<username>/.wine/drive_c/Program Files (x86)/Darwinex MT4/MQL4/Files`
 
-1. The example script will just try to subscribe to EURUSD and GBPUSD, and print some information on every tick. You can run the script with:
+7. The example script will just try to subscribe to EURUSD and GBPUSD, and print some information on every tick. You can run the script with:
     ```console
     python dwx_client_example.py
     ```
@@ -81,9 +79,9 @@ The full list of input parameters for the MetaTrader Server EA (MT4 or MT5) is a
 ![MetaTrader Settings](resources/images/DWX_Connect_MetaTrader_Settings.jpg)
 
 **Python side:** 
-- **sleep_delay** - The time interval in which the Python side will check the files (in seconds). The default value is0.005 (5 milliseconds). 
+- **sleep_delay** - The time interval in which the Python side will check the files (in seconds). The default value is 0.005 (5 milliseconds). 
 
-- **max_retry_command_seconds** - If you send multiple commands in a short time, it could happen that the Python side is not able to write to the command file when the mql side is just reading it. The parameter `max_retry_command_seconds` can be used to define the period in which the Python side will retry to send the commend.
+- **max_retry_command_seconds** - If you send multiple commands in a short time, it could happen that the Python side is not able to write to the command file when the mql side is just reading it. The parameter `max_retry_command_seconds` can be used to define the period in which the Python side will retry to send the command.
 
 - **load_orders_from_file** - If true, it will load the orders from a file on initialization. Otherwise it would trigger the on_order_event() function after a restart of the Python program if there are any open orders because it would not know about them. However, it will only know the last state that was sent to the Python side. If the mql server EA is turned off during order operations, it would only notice them when both are turned on again. 
 
@@ -111,14 +109,14 @@ Click the image below to watch a live demonstration of DWX Connect:
 
 [![DWX Connect: Seamlessly Link Any Trading Strategy to Darwinex](https://img.youtube.com/vi/rbApdnEyJxw/0.jpg)](https://www.youtube.com/watch?v=rbApdnEyJxw "DWX Connect: Seamlessly Link Any Trading Strategy to Darwinex")
 
-## Available Functions:
+## Available Functions
 
 **Stored Information:**
 
 The following dictionaries can be used to access the available information directly (e.g. through self.dwx.open_orders):
 - `open_orders` - contains the open orders. The order ticket is used as the key for this dictionary. 
 - `account_info` - contains the account information such as account name, number, equity, balance, leverage and free margin. 
-- `market_data` - contain the current bid/ask prices for all subscribed symbols as well as the tick value. 
+- `market_data` - contains the current bid/ask prices for all subscribed symbols as well as the tick value. 
 - `bar_data` - contains the latest bar data. This is updated continually if subscribed to specific bar data. 
 - `historic_data` - contains the latest historic data, which is only updated after a request for historic data.
 - `historic_trades` - contains the requested trade history, which is only updated after a request for historic trades. 
@@ -126,7 +124,6 @@ The following dictionaries can be used to access the available information direc
 **Data Functions:**
 - `subscribe_symbols(symbols)` - subscribes to tick data for a list of symbols. Example format: `symbols = ['EURUSD', 'GBPUSD']`
 - `subscribe_symbols_bar_data(symbols)` - subscribes to bar data for a list of symbol/timeframe combinations. Example format: `symbols=[['EURUSD', 'M15'], ['GBPUSD', 'H4']]`
-- `subscribe_symbols(symbols)` - subscribes to tick data for a list of symbols. Example format: `symbols = ['EURUSD', 'GBPUSD']`
 - `get_historic_data(symbol, time_frame, start, end)` - requests historic bar data. The arguments `start` and `end` are given as timestamp. 
 - `get_historic_trades(lookback_days)` - requests the trade history for the last x days. Keep in mind that in MetaTrader the complete trade history should be visible in the Account History tab. 
 
